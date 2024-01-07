@@ -20,6 +20,11 @@
             <button class="navShowHide">
                 <img src="assets/images/icons/menu.png">
             </button>
+
+            <a class="logoContainer" href="index.php">
+                <img src="assets/images/icons/clonetube.png">
+            </a>
+                
         </div>
 
         <div id="sideNavContainer" style="display:none;">
