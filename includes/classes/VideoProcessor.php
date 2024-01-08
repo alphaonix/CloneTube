@@ -20,6 +20,20 @@ class VideoProcessor {
         $tempFilePath = str_replace(" ", "_", $tempFilePath);
 
         $isValidData = $this->processData($videoData, $tempFilePath);
+
+        if(!$isValidData) {
+            return false;
+        }
+
+        if(move_uploaded_file($videoData["tmp_name"], $tempFilePath)) {
+        
+            $finalFilePath = $targetDir . uniqid() . ".mp4";
+
+            if (!$this->insertVideoData($videoUploadData, $finalFilePath)) {
+                echo "Insert query failed";
+                return false;
+            }
+        }
     }
 
     private function processData($videoData, $filePath) {
@@ -30,9 +44,15 @@ class VideoProcessor {
             return false;
         }
         else if(!$this->isValidType($videoType)) {
-            echo "Invalid file type ";
+            echo "Invalid file type";
             return false;
         }
+        else if($this->hasError($videoData)) {
+            echo "Error code: " . $videoData["error"];
+            return false;
+        }
+
+        return true;
     }
 
     private function isValidSize($data) {
@@ -42,6 +62,24 @@ class VideoProcessor {
     private function isValidType($type) {
         $lowercased = strtolower($type);
         return in_array($lowercased, $this->allowedTypes);
+    }
+
+    private function hasError($data) {
+        return $data["error"] != 0;
+    }
+
+    private function insertVideoData($uploadData, $filePath) {
+        $query = $this->con->prepare("INSERT INTO videos(title, uploadedBy, description, privacy, category, filePath)
+                                        VALUES(:title, :uploadedBy, :description, :privacy, :category, :filePath)");
+                                        
+        $query->bindValue(":title", $uploadData->getTitle());
+        $query->bindValue(":uploadedBy", $uploadData->getUploadedBy());
+        $query->bindValue(":description", $uploadData->getDescription());
+        $query->bindValue(":privacy", $uploadData->getPrivacy());
+        $query->bindValue(":category", $uploadData->getCategory());
+        $query->bindValue(":filePath", $filePath);
+    
+        return $query->execute();
     }
 }
 ?>
