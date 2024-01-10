@@ -1,6 +1,6 @@
 # CloneTube
 Descrição do Projeto:
-O YouTubeClone é um projeto open source desenvolvido para replicar as funcionalidades principais do YouTube.
+O CloneTube é um projeto open source desenvolvido para replicar as funcionalidades principais do YouTube.
 
 Principais Recursos:
 
