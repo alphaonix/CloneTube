@@ -2,3 +2,17 @@
 ffmpeg/bin/ffmpeg.exe
 ffmpeg/bin/ffplay.exe
 ffmpeg/bin/ffprobe.exe
+uploads/videos
+*.exe
+ffmpeg/bin/ffmpeg.exe
+*.html
+*.txt
+*.exe
+ffmpeg/bin/ffprobe.exe
+ffmpeg/bin/ffprobe.exe
+*.exe
+ffmpeg/bin/ffmpeg.exe
+ffmpeg/bin/ffmpeg.exe
+ffmpeg/bin/ffplay.exe
+ffmpeg/bin/ffprobe.exe
+*.exe

@@ -40,6 +40,11 @@ class VideoProcessor {
                 echo "Upload failed";
                 return false;
             }
+
+            if(!$this->deleteFile($tempFilePath)) {
+                echo "Upload failed";
+                return false;
+            }
         }
     }
 
@@ -78,7 +83,7 @@ class VideoProcessor {
     private function insertVideoData($uploadData, $filePath) {
         $query = $this->con->prepare("INSERT INTO videos(title, uploadedBy, description, privacy, category, filePath)
                                         VALUES(:title, :uploadedBy, :description, :privacy, :category, :filePath)");
-                                        
+            
         $query->bindValue(":title", $uploadData->getTitle());
         $query->bindValue(":uploadedBy", $uploadData->getUploadedBy());
         $query->bindValue(":description", $uploadData->getDescription());
@@ -100,6 +105,15 @@ class VideoProcessor {
             foreach($outputLog as $line) {
                 echo $line . "<br>";
             }
+            return false;
+        }
+
+        return true;
+    }
+
+    private function deleteFile($filePath) {
+        if(!unlink($filePath)) {
+            echo "Could not delete file\n";
             return false;
         }
 

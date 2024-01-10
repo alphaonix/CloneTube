@@ -1,3 +1,3 @@
 <?php require_once("includes/header.php"); ?>
-    hello
+    Hello
 <?php require_once("includes/footer.php"); ?>
